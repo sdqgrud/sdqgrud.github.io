@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <link rel="icon" type="image/png" href="https://i.ibb.co/B2kTwgTP/favicon.png">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SDQGRUD</title>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&display=swap" rel="stylesheet" />
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #0a0a0a;
+      color: #e0e0e0;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 40px;
+      background-color: #0a0a0a;
+      border-bottom: 1px solid #333;
+      flex-shrink: 0;
+    }
+
+    .logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 48px;
+      color: #ff2e2e;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+    }
+
+    nav a {
+      margin-left: 30px;
+      text-decoration: none;
+      color: #e0e0e0;
+      font-size: 14px;
+      text-transform: uppercase;
+      transition: color 0.3s;
+      font-weight: 600;
+      letter-spacing: 1.5px;
+    }
+
+    nav a:hover {
+      color: #ff2e2e;
+    }
+
+    .hero {
+      width: 100%;
+      min-height: 40vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 40px 20px;
+      background: linear-gradient(145deg, #1a1a1a 0%, #0a0a0a 50%, #000000 100%);
+      flex-shrink: 0;
+      border-bottom: 1px solid #333;
+      box-sizing: border-box;
+      position: relative;
+    }
+
+    .triangle {
+      width: 40px;
+      height: 40px;
+      margin-bottom: 20px;
+      transform-origin: center center;
+      animation: rotateTriangle 8s linear infinite;
+      position: relative;
+      top: 10px;
+    }
+
+    .triangle svg {
+      width: 100%;
+      height: 100%;
+      fill: #ff2e2e;
+      filter: drop-shadow(0 0 5px #ff2e2e);
+    }
+
+    @keyframes rotateTriangle {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .hero h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 48px;
+      background: linear-gradient(90deg, #ff2e2e, #ff6464, #ff2e2e);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+      max-width: 90%;
+    }
+
+    .hero p {
+      font-size: 18px;
+      max-width: 700px;
+      margin: 0 auto;
+      line-height: 1.5;
+      font-weight: 600;
+      color: #ccc;
+    }
+
+    main {
+      flex-grow: 1;
+      padding-bottom: 0;
+    }
+
+    #shop {
+      max-width: 95vw;
+      margin: 40px auto;
+      padding: 40px 30px;
+      background: linear-gradient(145deg, #0d0d0d, #000000);
+      border-radius: 16px;
+      box-sizing: border-box;
+      border: 1px solid #333;
+      box-shadow: 0 0 20px rgba(255, 46, 46, 0.15);
+      transition: box-shadow 0.3s ease;
+      text-align: center;
+    }
+
+    #shop:hover {
+      box-shadow: 0 0 40px rgba(255, 46, 46, 0.3);
+    }
+
+    .section {
+      padding: 0 10px;
+      text-align: center;
+    }
+
+    .section h2 {
+      font-family: 'Bebas Neue', sans-serif;
+      color: #ff2e2e;
+      margin-bottom: 25px;
+      font-size: 36px;
+      text-transform: uppercase;
+    }
+
+    .categories {
+      margin-bottom: 20px;
+    }
+
+    .category-btn {
+      background: transparent;
+      border: 2px solid #ff2e2e;
+      color: #ff2e2e;
+      padding: 10px 25px;
+      margin: 0 10px 10px 0;
+      cursor: pointer;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 16px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      border-radius: 12px;
+      transition: background 0.3s, color 0.3s;
+      outline-offset: 2px;
+    }
+
+    .category-btn.active,
+    .category-btn:hover {
+      background: #ff2e2e;
+      color: #fff;
+    }
+
+    .filters {
+      margin-bottom: 30px;
+    }
+
+    .filter-btn {
+      background: transparent;
+      border: 2px solid #777;
+      color: #777;
+      padding: 8px 18px;
+      margin: 0 10px 10px 0;
+      cursor: pointer;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      border-radius: 12px;
+      transition: background 0.3s, color 0.3s, border-color 0.3s;
+      outline-offset: 2px;
+    }
+
+    .filter-btn.active,
+    .filter-btn:hover {
+      background: #777;
+      color: #111;
+      border-color: #777;
+    }
+
+    .products {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
+      padding: 0 10px;
+      max-width: 900px;
+      margin: 0 auto;
+      transition: all 0.3s ease;
+    }
+
+    .empty-category {
+      color: #777;
+      font-size: 18px;
+      padding: 40px 0;
+      text-align: center;
+      grid-column: 1 / -1;
+    }
+
+    .product-card {
+      background: linear-gradient(145deg, #121212, #1c1c1c);
+      border: 1px solid #333;
+      border-radius: 12px;
+      padding: 20px;
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      color: #ddd;
+      outline-offset: 2px;
+    }
+
+    .product-card:hover,
+    .product-card:focus {
+      transform: translateY(-6px) scale(1.04);
+      box-shadow: 0 0 15px rgba(255, 46, 46, 0.7);
+      outline: none;
+    }
+
+    .product-img {
+      width: 100%;
+      height: 250px;
+      background-size: cover;
+      background-position: center center;
+      border-radius: 10px;
+      margin-bottom: 15px;
+      flex-shrink: 0;
+    }
+
+    .product-title {
+      font-family: 'Anton', sans-serif;
+      font-size: 22px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+      color: #ff2e2e;
+      text-align: center;
+    }
+
+    .product-desc {
+      font-size: 14px;
+      color: #bbb;
+      margin-bottom: 10px;
+      min-height: 48px;
+      text-align: center;
+    }
+
+    .product-price {
+      font-family: 'Anton', sans-serif;
+      color: #ff2e2e;
+      font-size: 20px;
+      margin-top: auto;
+      text-align: center;
+    }
+
+    .order-btn {
+      background: linear-gradient(45deg, #ff2e2e, #ff6464);
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      margin-top: 10px;
+      cursor: pointer;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 16px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      border-radius: 8px;
+      transition: transform 0.3s, box-shadow 0.3s;
+      width: 100%;
+      max-width: 200px;
+    }
+
+    .order-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(255, 46, 46, 0.4);
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0, 0, 0, 0.85);
+      z-index: 9999;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .modal-content {
+      background: #111;
+      border-radius: 12px;
+      max-width: 600px;
+      width: 100%;
+      padding: 20px;
+      box-sizing: border-box;
+      box-shadow: 0 0 30px #ff2e2e;
+      color: #eee;
+      position: relative;
+    }
+
+    .modal-content h3 {
+      margin-top: 0;
+      color: #ff2e2e;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 32px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      margin-bottom: 15px;
+    }
+
+    .modal-content p {
+      font-size: 16px;
+      margin-bottom: 20px;
+      color: #bbb;
+    }
+
+    .modal-content .modal-price {
+      font-family: 'Anton', sans-serif;
+      font-size: 24px;
+      color: #ff2e2e;
+      margin-bottom: 20px;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      font-size: 28px;
+      color: #ff2e2e;
+      cursor: pointer;
+      user-select: none;
+      font-weight: 700;
+      line-height: 1;
+      transition: color 0.3s;
+    }
+
+    .modal-close:hover {
+      color: #ff6464;
+    }
+
+    .info-sections {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      width: 100%;
+      border-top: 1px solid #333;
+      background: linear-gradient(145deg, #0a0a0a, #000000);
+    }
+
+    .about-section, .contacts-section {
+      padding: 60px 40px;
+      border-right: 1px solid #333;
+    }
+
+    .contacts-section {
+      border-right: none;
+    }
+
+    .section-title {
+      font-family: 'Bebas Neue', sans-serif;
+      color: #ff2e2e;
+      font-size: 36px;
+      text-transform: uppercase;
+      margin-bottom: 30px;
+      letter-spacing: 2px;
+    }
+
+    .section-content {
+      font-size: 16px;
+      line-height: 1.6;
+      color: #ccc;
+    }
+
+    .section-content p {
+      margin-bottom: 15px;
+    }
+
+    .contact-info {
+      margin-top: 20px;
+    }
+
+    .contact-item {
+      margin-bottom: 15px;
+      color: #ccc;
+      font-size: 16px;
+      line-height: 1.5;
+    }
+
+    .tg-link {
+      color: #ff2e2e;
+      text-decoration: none;
+      border-bottom: 1px solid #ff2e2e;
+      transition: color 0.3s, border-color 0.3s;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 18px;
+      letter-spacing: 1px;
+    }
+
+    .tg-link:hover {
+      color: #ff6464;
+      border-color: #ff6464;
+    }
+
+    .divider {
+      height: 1px;
+      background-color: #333;
+      margin: 20px 0;
+      width: 100%;
+    }
+
+    /* Стили для бегущей строки */
+    .marquee {
+      width: 100%;
+      overflow: hidden;
+      white-space: nowrap;
+      background-color: #000;
+      color: #ff2e2e;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 24px;
+      padding: 10px 0;
+      border-top: 1px solid #333;
+    }
+    
+    .marquee-content {
+      display: inline-block;
+      animation: marquee 20s linear infinite;
+      padding-left: 100%;
+    }
+    
+    @keyframes marquee {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-100%); }
+    }
+
+    /* Адаптивность */
+    @media (max-width: 768px) {
+      .info-sections {
+        grid-template-columns: 1fr;
+      }
+      
+      .about-section {
+        border-right: none;
+        border-bottom: 1px solid #333;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">SDQGRUD</div>
+    <nav>
+      <a href="#shop">Магазин</a>
+      <a href="#about">О нас</a>
+      <a href="#contacts">Контакты</a>
+    </nav>
+  </header>
+
+  <section class="hero" aria-label="Информация о SDQGRUD">
+    <div class="triangle" aria-hidden="true">
+      <svg viewBox="0 0 100 100" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
+        <path d="M50 15 L85 85 H15 Z"></path>
+      </svg>
+    </div>
+    <h1>МРАК.БРАК.ВАК</h1>
+    <p>SDQGRUD - Уличный бренд из пустоты, бездомные коты, бесконечные холсты</p>
+  </section>
+
+  <main>
+    <section id="shop" aria-label="Магазин одежды">
+      <h2 style="color:#ff2e2e; font-family:'Bebas Neue', sans-serif; font-size:48px; margin-bottom:30px; text-transform: uppercase;">Магазин</h2>
+      
+      <div class="categories" role="tablist" aria-label="Категории товаров">
+        <button class="category-btn active" data-category="all" role="tab" aria-selected="true" tabindex="0">Все</button>
+        <button class="category-btn" data-category="Футболки" role="tab" aria-selected="false" tabindex="-1">Футболки</button>
+        <button class="category-btn" data-category="Худи" role="tab" aria-selected="false" tabindex="-1">Худи</button>
+        <button class="category-btn" data-category="Штаны" role="tab" aria-selected="false" tabindex="-1">Штаны</button>
+      </div>
+
+      <div class="filters" role="group" aria-label="Фильтры">
+        <button class="filter-btn active" data-filter="newest" tabindex="0">Новинки</button>
+        <button class="filter-btn" data-filter="price" tabindex="0">Самые дешевые</button>
+        <button class="filter-btn" data-filter="expensive" tabindex="0">Самые дорогие</button>
+      </div>
+
+      <div class="products" id="products" aria-live="polite" aria-atomic="true"></div>
+    </section>
+  </main>
+
+  <div class="info-sections">
+    <section id="about" class="about-section" aria-label="О бренде SDQGRUD">
+      <h2 class="section-title">О НАС</h2>
+      <div class="section-content">
+        <p>SDQGRUD — это не просто бренд, это отражение городской эстетики и уличной культуры. Мы создаём одежду для тех, кто ценит индивидуальность и смелость.</p>
+      </div>
+    </section>
+
+    <section id="contacts" class="contacts-section" aria-label="Контакты SDQGRUD">
+      <h2 class="section-title">КОНТАКТЫ</h2>
+      <div class="section-content">
+        <p>По вопросам сотрудничества и заказов:</p>
+        <a href="https://t.me/degrisafv" class="tg-link" target="_blank">@degrisafv</a>
+      </div>
+    </section>
+  </div>
+
+  <div class="modal" id="productModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-describedby="modalDesc">
+    <div class="modal-content">
+      <span class="modal-close" role="button" aria-label="Закрыть окно">&times;</span>
+      <h3 id="modalTitle"></h3>
+      <p id="modalDesc"></p>
+      <div class="modal-price" id="modalPrice"></div>
+      <a href="https://t.me/degrisafv" class="order-btn" target="_blank" style="display: block; text-align: center; margin: 20px auto 0;">Заказать в Telegram</a>
+    </div>
+  </div>
+
+  <!-- Бегущая строка -->
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee-content">
+      ‘aM Hy STO THNO Geryujan CTpoKa &nbsp;&nbsp;&nbsp;&nbsp; ‘aM Hy STO THNO Geryujan CTpoKa &nbsp;&nbsp;&nbsp;&nbsp; ‘aM Hy STO THNO Geryujan CTpoKa &nbsp;&nbsp;&nbsp;&nbsp; ‘aM Hy STO THNO Geryujan CTpoKa &nbsp;&nbsp;&nbsp;&nbsp;
+    </div>
+  </div>
+
+  <script>
+    const products = [
+      {
+        title: "Дитя инцеста",
+        desc: "92% хлопок, 8% эластан. Пошив Казахстан, ткань Турция. Оверсайз крой. Для тех, кто не боится эпатировать.",
+        price: 3000,
+        category: "Футболки", 
+        img: "https://i.ibb.co/fY0cRgWh/image.jpg",
+        created: "2025-06-15"
+      },
+      {
+        title: "Почему?",
+        desc: "92% хлопок, 8% эластан. Пошив Казахстан, ткань Турция. Оверсайз крой. Вопрос, который останется без ответа.",
+        price: 2400,
+        category: "Футболки",
+        img: "https://i.ibb.co/rRsND0BT/image.jpg",
+        created: "2025-06-10"
+      },
+      {
+        title: "Ахуел",
+        desc: "92% хлопок, 8% эластан. Пошив Казахстан, ткань Турция. Оверсайз крой. Для тех, кто привык шокировать окружение.",
+        price: 2200,
+        category: "Футболки",
+        img: "https://i.ibb.co/b5gxYTxV/image.jpg", 
+        created: "2025-06-12"
+      },
+      {
+        title: "Джокер",
+        desc: "92% хлопок, 8% эластан. Пошив Казахстан, ткань Турция. Оверсайз крой. Улыбайтесь, господа!",
+        price: 2200,
+        category: "Футболки",
+        img: "https://i.ibb.co/zVsCrmmW/image.jpg",
+        created: "2025-06-05"
+      },
+      {
+        title: "Pft,fkb",
+        desc: "92% хлопок, 8% эластан. Пошив Казахстан, ткань Турция. Оверсайз крой. Шифр, который поймут только свои.",
+        price: 2200,
+        category: "Футболки",
+        img: "https://i.ibb.co/vCmv3tY0/image.jpg",
+        created: "2025-06-08"
+      },
+      {
+        title: "CДЭК",
+        desc: "92% хлопок, 8% эластан. Пошив Казахстан, ткань Турция. Оверсайз крой. Когда доставка — это приключение.",
+        price: 2200,
+        category: "Футболки",
+        img: "https://i.ibb.co/jPjcVG6j/image.jpg",
+        created: "2025-06-18"
+      },
+      {
+        title: "Иссус саламалекум",
+        desc: "92% хлопок, 8% эластан. Пошив Казахстан, ткань Турция. Оверсайз крой. Когда доставка — это приключение.",
+        price: 3000,
+        category: "Футболки",
+        img: "https://i.ibb.co/QjtqkdmY/image.jpg",
+        created: "2025-06-20"
+      }
+    ];
+
+    const productsContainer = document.getElementById('products');
+    const categoryButtons = document.querySelectorAll('.category-btn');
+    const filterButtons = document.querySelectorAll('.filter-btn');
+
+    let activeCategory = 'all';
+    let activeFilter = 'newest';
+
+    function displayProducts(category = 'all', filter = 'newest') {
+      let filteredProducts = category === 'all' ? [...products] : products.filter(p => p.category === category);
+
+      if (filter === 'price') {
+        filteredProducts.sort((a, b) => a.price - b.price);
+      } else if (filter === 'newest') {
+        filteredProducts.sort((a, b) => new Date(b.created) - new Date(a.created));
+      } else if (filter === 'expensive') {
+        filteredProducts.sort((a, b) => b.price - a.price);
+      }
+
+      productsContainer.innerHTML = '';
+
+      if (filteredProducts.length === 0 || category === 'Худи' || category === 'Штаны') {
+        productsContainer.innerHTML = `<div class="empty-category">Пока что, ничего :(</div>`;
+        return;
+      }
+
+      filteredProducts.forEach(product => {
+        const card = document.createElement('article');
+        card.className = 'product-card';
+        card.tabIndex = 0;
+        card.setAttribute('role', 'button');
+        card.setAttribute('aria-label', `${product.title}, цена ${product.price.toLocaleString('ru-RU')} рублей. Подробнее`);
+
+        card.innerHTML = `
+          <div class="product-img" style="background-image: url('${product.img}')"></div>
+          <div class="product-title">${product.title}</div>
+          <div class="product-desc">${product.desc}</div>
+          <div class="product-price">${product.price.toLocaleString('ru-RU')} ₽</div>
+          <button class="order-btn" onclick="window.open('https://t.me/degrisafv', '_blank')">Заказать</button>
+        `;
+
+        card.addEventListener('click', (e) => {
+          if (!e.target.classList.contains('order-btn')) {
+            openModal(product);
+          }
+        });
+        card.addEventListener('keydown', e => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            openModal(product);
+          }
+        });
+
+        productsContainer.appendChild(card);
+      });
+    }
+
+    function openModal(product) {
+      const modal = document.getElementById('productModal');
+      document.getElementById('modalTitle').textContent = product.title;
+      document.getElementById('modalDesc').textContent = product.desc;
+      document.getElementById('modalPrice').textContent = `${product.price.toLocaleString('ru-RU')} ₽`;
+      modal.style.display = 'flex';
+      modal.querySelector('.modal-close').focus();
+    }
+
+    document.querySelector('.modal-close').addEventListener('click', () => {
+      document.getElementById('productModal').style.display = 'none';
+    });
+
+    window.addEventListener('click', (e) => {
+      const modal = document.getElementById('productModal');
+      if (e.target === modal) {
+        modal.style.display = 'none';
+      }
+    });
+
+    categoryButtons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        categoryButtons.forEach(b => {
+          b.classList.remove('active');
+          b.setAttribute('aria-selected', 'false');
+          b.tabIndex = -1;
+        });
+        btn.classList.add('active');
+        btn.setAttribute('aria-selected', 'true');
+        btn.tabIndex = 0;
+        activeCategory = btn.dataset.category;
+        displayProducts(activeCategory, activeFilter);
+      });
+    });
+
+    filterButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        filterButtons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        activeFilter = btn.dataset.filter;
+        displayProducts(activeCategory, activeFilter);
+      });
+    });
+
+    displayProducts();
+  </script>
+</body>
+</html>
